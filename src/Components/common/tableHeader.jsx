@@ -13,15 +13,26 @@ const TableHeader = ({ columns, sortColumn, onSort }) => {
     onSort(sortColumns);
   };
 
+  const renderSortIcons = (column) => {
+    if (column.path !== sortColumn.path) return null;
+
+    if (sortColumn.order === "asc") {
+      return <i className="fa fa-sort-asc" />;
+    }
+    return <i className="fa fa-sort-desc" />;
+  };
+
   return (
     <thead>
       <tr>
         {columns.map((column) => (
           <th
+            style={{ cursor: "pointer" }}
             key={column.path || column.key}
             onClick={() => raiseSort(column.path)}
           >
             {column.label}
+            {renderSortIcons(column)}
           </th>
         ))}
       </tr>
