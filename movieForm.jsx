@@ -1,9 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import { getMovie, saveMovie } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
-import { WithRouter } from "./withRouter";
 
 class MovieForm extends Form {
   state = {
@@ -11,16 +10,20 @@ class MovieForm extends Form {
       title: "",
       genreId: "",
       numberInStock: "",
-      dailyRentalRate: "",
+      dailyRentalRate: ""
     },
     genres: [],
-    errors: {},
+    errors: {}
   };
 
   schema = {
     _id: Joi.string(),
-    title: Joi.string().required().label("Title"),
-    genreId: Joi.string().required().label("Genre"),
+    title: Joi.string()
+      .required()
+      .label("Title"),
+    genreId: Joi.string()
+      .required()
+      .label("Genre"),
     numberInStock: Joi.number()
       .required()
       .min(0)
@@ -30,7 +33,7 @@ class MovieForm extends Form {
       .required()
       .min(0)
       .max(10)
-      .label("Daily Rental Rate"),
+      .label("Daily Rental Rate")
   };
 
   componentDidMount() {
@@ -41,8 +44,7 @@ class MovieForm extends Form {
     if (movieId === "new") return;
 
     const movie = getMovie(movieId);
-    // if (!movie) return this.props.history.replace("/not-found");
-    if (!movie) return this.props.navigate("/not-found", { replace: true });
+    if (!movie) return this.props.history.replace("/not-found");
 
     this.setState({ data: this.mapToViewModel(movie) });
   }
@@ -53,15 +55,14 @@ class MovieForm extends Form {
       title: movie.title,
       genreId: movie.genre._id,
       numberInStock: movie.numberInStock,
-      dailyRentalRate: movie.dailyRentalRate,
+      dailyRentalRate: movie.dailyRentalRate
     };
   }
 
   doSubmit = () => {
     saveMovie(this.state.data);
 
-    // this.props.history.push("/movies");
-    this.props.navigate("/movies");
+    this.props.history.push("/movies");
   };
 
   render() {
@@ -81,4 +82,3 @@ class MovieForm extends Form {
 }
 
 export default MovieForm;
-// export default WithRouter(MovieForm);

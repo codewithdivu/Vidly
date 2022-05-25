@@ -5,6 +5,7 @@ import { paginate } from "../utils/paginate";
 import ListGroup from "./common/listGroup";
 import Pagination from "./common/pagination";
 import MoviesTable from "./moviesTable";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 const Movies = () => {
@@ -80,6 +81,13 @@ const Movies = () => {
         />
       </div>
       <div className="col">
+        <Link
+          to="/movies/new"
+          className="btn btn-primary"
+          style={{ marginBottom: 20 }}
+        >
+          New Movie
+        </Link>
         <h3>there is {totalCount} in the Database </h3>
         <MoviesTable
           allMovies={allMovies}
